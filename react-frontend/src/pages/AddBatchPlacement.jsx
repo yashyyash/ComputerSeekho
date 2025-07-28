@@ -8,14 +8,14 @@ const AddBatchPlacement = () => {
     batchName: "",
     placementPercentage: "",
     logoFileName: "",
-    isActive: true
+    isActive: true,
   });
 
   const [placements, setPlacements] = useState([]);
 
   const fetchPlacements = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/placement");
+      const res = await axios.get("http://localhost:8080/api/batches");
       setPlacements(res.data);
     } catch (err) {
       console.error("Failed to fetch placements:", err);
@@ -30,7 +30,7 @@ const AddBatchPlacement = () => {
     const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -41,20 +41,28 @@ const AddBatchPlacement = () => {
       batchName: formData.batchName,
       placementPercentage: formData.placementPercentage,
       batchLogoUrl: `/public/batchwisePlacement/${formData.logoFileName.trim()}`,
-      isActive: formData.isActive
+      isActive: formData.isActive,
     };
 
     try {
       if (formData.batchId) {
-        // Update
-        await axios.put(`http://localhost:8080/api/placement/${formData.batchId}`, payload);
+        await axios.put(
+          `http://localhost:8080/api/batches/${formData.batchId}`,
+          payload
+        );
         alert("Updated successfully!");
       } else {
-        // Create
-        await axios.post("http://localhost:8080/api/placement", payload);
+        await axios.post("http://localhost:8080/api/batches", payload);
         alert("Added successfully!");
       }
-      setFormData({ batchId: null, batchName: "", placementPercentage: "", logoFileName: "", isActive: true });
+
+      setFormData({
+        batchId: null,
+        batchName: "",
+        placementPercentage: "",
+        logoFileName: "",
+        isActive: true,
+      });
       fetchPlacements();
     } catch (err) {
       console.error("Save failed:", err.response || err);
@@ -69,14 +77,14 @@ const AddBatchPlacement = () => {
       batchName: placement.batchName,
       placementPercentage: placement.placementPercentage,
       logoFileName: filename,
-      isActive: placement.isActive
+      isActive: placement.isActive,
     });
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this placement?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/placement/${id}`);
+        await axios.delete(`http://localhost:8080/api/batches/${id}`);
         alert("Deleted successfully!");
         fetchPlacements();
       } catch (err) {
@@ -88,7 +96,9 @@ const AddBatchPlacement = () => {
 
   return (
     <div className="add-placement-container">
-      <h2 className="form-heading">{formData.batchId ? "Edit" : "Add"} Batchwise Placement</h2>
+      <h2 className="form-heading">
+        {formData.batchId ? "Edit" : "Add"} Batchwise Placement
+      </h2>
       <form className="add-placement-form" onSubmit={handleSubmit}>
         <label>
           Batch Name:
@@ -125,18 +135,10 @@ const AddBatchPlacement = () => {
             onChange={handleChange}
             required
           />
-          <small className="note">Stored as: /public/batchwisePlacement/[filename]</small>
+          <small className="note">
+            Stored as: /public/batchwisePlacement/[filename]
+          </small>
         </label>
-
-        {/* <label className="checkbox-label">
-          <input
-            type="checkbox"
-            name="isActive"
-            checked={formData.isActive}
-            onChange={handleChange}
-          />
-          Is Active
-        </label> */}
 
         <button type="submit" className="submit-btn">
           {formData.batchId ? "Update" : "Add"} Placement
@@ -151,7 +153,6 @@ const AddBatchPlacement = () => {
             <th>Batch Name</th>
             <th>Percentage</th>
             <th>Logo</th>
-            {/* <th>Active</th> */}
             <th>Actions</th>
           </tr>
         </thead>
@@ -168,10 +169,17 @@ const AddBatchPlacement = () => {
                   style={{ width: "50px", height: "50px", objectFit: "cover" }}
                 />
               </td>
-              {/* <td>{placement.isActive ? "Yes" : "No"}</td> */}
               <td>
-                <button onClick={() => handleEdit(placement)} className="update-btn">Edit</button>
-                <button onClick={() => handleDelete(placement.batchId)} className="delete-btn">
+                <button
+                  onClick={() => handleEdit(placement)}
+                  className="update-btn"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(placement.batchId)}
+                  className="delete-btn"
+                >
                   Delete
                 </button>
               </td>
