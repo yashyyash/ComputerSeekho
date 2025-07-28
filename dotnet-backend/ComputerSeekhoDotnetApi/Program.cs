@@ -1,4 +1,7 @@
 
+using ComputerSeekhoDotnetApi.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ComputerSeekhoDotnetApi
 {
     public class Program
@@ -13,6 +16,11 @@ namespace ComputerSeekhoDotnetApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add AppDbContext with MySQL
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+            ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
             var app = builder.Build();
 
