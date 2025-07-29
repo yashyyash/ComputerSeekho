@@ -191,7 +191,7 @@ const BatchwisePlacement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/placement")
+    fetch("http://localhost:8080/api/batches")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
