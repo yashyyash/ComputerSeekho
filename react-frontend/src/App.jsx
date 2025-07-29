@@ -7,7 +7,7 @@ import NotificationBar from './components/NotificationBar';
 import Footer from './components/Footer';
 import BatchwisePlacement from './pages/BatchwisePlacement';
 import AddCourse from './pages/AddCourse';
-
+import Courses from "./pages/Courses";
 
 
 import React from "react";
@@ -27,13 +27,12 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/placement" element={<BatchwisePlacement />} />
-
-         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/manage-data" element={<ManageWebsiteData />} />
         <Route path="/add-course" element={<AddCourse />} />
         <Route path="/batchwise-placed-students/1" element={<BatchwisePlacedStudents />} />
         <Route path="/add-batch-placement" element={<AddBatchPlacement />} />
-
+        <Route path="/courses" element={<Courses />} />
       </Routes>
 
       <Footer />
