@@ -17,6 +17,7 @@ import ManageWebsiteData from "./pages/ManageWebsiteData";
 import BatchwisePlacedStudents from "./pages/BatchwisePlacedStudents";
 import AddBatchPlacement from "./pages/AddBatchPlacement";
 import EditBatchwisePlacedStudents from './pages/EditBatchwisePlacedStudents';
+import AddMarquee from './pages/AddMarquee';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
       <Route path="/batchwise-placed-students/:batchId" element={<BatchwisePlacedStudents />} />  {/* ✅ dynamic */}
       <Route path="/add-batch-placement" element={<AddBatchPlacement />} />
       <Route path="/courses" element={<Courses />} />
+      <Route path="/add-marquee" element={<AddMarquee />} />
       <Route path="/edit-batchwise-placed-students/:batchId" element={<EditBatchwisePlacedStudents />} />
     </Routes>
 
